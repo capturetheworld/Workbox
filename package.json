@@ -1,0 +1,10 @@
+{
+	"devDependencies": {
+		"electron-vite": "^2.2.0"
+	},
+	"scripts": {
+		"start": "electron-vite preview", // start electron app to preview production build
+		"dev": "electron-vite dev", // start dev server and electron app
+		"prebuild": "electron-vite build" // build for production
+	  }
+}
