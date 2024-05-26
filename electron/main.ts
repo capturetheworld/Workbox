@@ -1,7 +1,8 @@
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, ipcMain } from 'electron'
 import { createRequire } from 'node:module'
 import { fileURLToPath } from 'node:url'
 import path from 'node:path'
+import electron from 'electron'
 
 const require = createRequire(import.meta.url)
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
@@ -25,6 +26,8 @@ export const RENDERER_DIST = path.join(process.env.APP_ROOT, 'dist')
 process.env.VITE_PUBLIC = VITE_DEV_SERVER_URL ? path.join(process.env.APP_ROOT, 'public') : RENDERER_DIST
 
 let win: BrowserWindow | null
+
+
 
 function createWindow() {
   win = new BrowserWindow({
@@ -64,5 +67,12 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+ipcMain.on('openWindow', () => {
+    electron.shell
+        .openExternal("http://localhost:5174")
+        .catch((e) => console.log(e));
+})
+
 
 app.whenReady().then(createWindow)

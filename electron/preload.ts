@@ -21,4 +21,10 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
 
   // You can expose other APTs you need here.
   // ...
+
 })
+
+contextBridge.exposeInMainWorld('api', {
+  openWindow: () => ipcRenderer.send('openWindow')
+})
+
