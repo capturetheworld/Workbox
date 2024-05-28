@@ -1,5 +1,6 @@
 module.exports = {
   root: true,
+  languageOptions: { sourceType: "commonJS", },
   env: { node: true, browser: true, es2020: true },
   extends: [
     'eslint:recommended',
