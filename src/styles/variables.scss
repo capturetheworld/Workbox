@@ -1,0 +1,8 @@
+* {
+    --mantine-scale: 1;
+    --mantine-spacing-md:  calc(1rem * var(--mantine-scale));
+    --group-gap: var(--mantine-spacing-md);
+    --group-align: center;
+    --group-justify: flex-start;
+    --group-wrap: wrap;
+}

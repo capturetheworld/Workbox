@@ -1,39 +1,36 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/electron-vite.animate.svg";
+// import "@mantine/core/styles.css";
+import { MantineProvider } from "@mantine/core";
+
+import { Button, Group, Checkbox } from "./components";
+
 import "./App.scss";
 
-import { Button } from "./components";
-
 const App = () => {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
+    <MantineProvider>
       <div>
-        <Button variant="primary" buttonText="Hello" />
-        <Button variant="secondary" buttonText="Secondary" />
-        {/* <a href="https://electron-vite.github.io" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a> */}
-      </div>
-      <h1>Workbox</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+        <h1>Workbox</h1>
+        <p className="read-the-docs">
+          Click on the Vite and React logos to learn more
         </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+
+      <Group>
+        <Button variant="primary" buttonText="Hello" />
+        <Button variant="secondary" buttonText="Secondary" />
+        <Checkbox label="Show" />
+      </Group>
+    </MantineProvider>
   );
 };
 
 export default App;
+
+// {
+/* <a href="https://electron-vite.github.io" target="_blank">
+          <img src={viteLogo} className="logo" alt="Vite logo" />
+        </a>
+        <a href="https://react.dev" target="_blank">
+          <img src={reactLogo} className="logo react" alt="React logo" />
+        </a> */
+// }
