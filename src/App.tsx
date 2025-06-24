@@ -1,7 +1,9 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/electron-vite.animate.svg";
-import "./App.css";
+import "./App.scss";
+
+import { Button } from "./components";
 
 const App = () => {
   const [count, setCount] = useState(0);
@@ -9,14 +11,16 @@ const App = () => {
   return (
     <>
       <div>
-        <a href="https://electron-vite.github.io" target="_blank">
+        <Button variant="primary" buttonText="Hello" />
+        <Button variant="secondary" buttonText="Secondary" />
+        {/* <a href="https://electron-vite.github.io" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
         <a href="https://react.dev" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        </a> */}
       </div>
-      <h1>Vite + React</h1>
+      <h1>Workbox</h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}

@@ -1,0 +1,4 @@
+@mixin focus-border {
+  outline: 2px solid orange;
+  outline-offset: 2px;
+}
