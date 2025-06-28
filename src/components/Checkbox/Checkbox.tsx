@@ -9,25 +9,31 @@ type CheckboxProps = {
 
 const ComponentName = CN("Checkbox");
 const parts = {
-  checkbox: ComponentName,
-  checkmark: EN(ComponentName, "checkmark"),
+  container: ComponentName,
+  checkbox: EN(ComponentName, "checkbox"),
+  label: EN(ComponentName, "label"),
 };
 
-export const Checkbox = ({ showLabel = false, label }: CheckboxProps) => {
+export const Checkbox = ({ showLabel = true, label }: CheckboxProps) => {
   const [checked, setChecked] = useState<boolean>(false);
 
-  const handleOnClick = () => {
+  const handleOnChange = () => {
     setChecked((prev) => !prev);
   };
 
   return (
     <>
-      <label className={CLSX(parts.checkbox)}>
-        <input type="checkbox" onClick={handleOnClick} checked={checked} />
+      <div className={CLSX(parts.container)}>
+        <input
+          className={CLSX(parts.checkbox)}
+          type="checkbox"
+          onChange={handleOnChange}
+          checked={checked}
+        />
         {showLabel && label !== undefined && (
-          <span className={CLSX(parts.checkmark)}>{label}</span>
+          <label className={CLSX(parts.label)}>{label}</label>
         )}
-      </label>
+      </div>
     </>
   );
 };
