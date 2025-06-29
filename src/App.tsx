@@ -14,7 +14,7 @@ const App = () => {
     setFile(event.target.files?.[0] || null);
   };
 
-  const getXMLNode = (xml: Document, nodeName: string): Document => {
+  const getXMLNode = (xml: XMLDocument, nodeName: string): XMLDocument => {
     const nodes = xml.getElementsByTagName(nodeName);
     if (nodes.length > 0) {
       return nodes[0];
