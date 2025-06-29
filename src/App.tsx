@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 // import "@mantine/core/styles.css";
 import { MantineProvider } from "@mantine/core";
 
@@ -8,27 +8,59 @@ import "./App.scss";
 
 const App = () => {
   const [file, setFile] = useState<File | null>(null);
+  const [parsedText, setParsedText] = useState<Document | null>(null);
 
-  const handleonChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleonChange = (event: ChangeEvent<HTMLInputElement>) => {
     setFile(event.target.files?.[0] || null);
   };
 
-  //Memoize parser
-  const parsedText = useMemo(() => {
-    if (file === undefined || !file) return null;
+  const getXMLNode = (xml: Document, nodeName: string): Document => {
+    const nodes = xml.getElementsByTagName(nodeName);
+    if (nodes.length > 0) {
+      return nodes[0];
+    }
+    return null;
+  };
+
+  // Effect to read file and parse XML
+  useEffect(() => {
+    if (!file) {
+      setParsedText(null);
+      return;
+    }
+
     const reader = new FileReader();
-    let readerResult = "";
+    let isCancelled = false;
+
+    reader.onloadend = (e) => {
+      if (isCancelled) return;
+
+      const content = e.target?.result as string;
+
+      if (content) {
+        const parser = new DOMParser();
+        const parsed = parser.parseFromString(content, "text/xml");
+        setParsedText(parsed);
+
+        //Get Audio Outputs
+        console.log(
+          getXMLNode(getXMLNode(parsed, "AudioMapping"), "AudioOutputs")
+        );
+        console.log(
+          getXMLNode(getXMLNode(parsed, "AudioMapping"), "AudioSources")
+        );
+      }
+    };
 
     reader.readAsText(file);
 
-    reader.onloadend = (e) => {
-      readerResult = e.target?.result as string;
+    // Cleanup function
+    return () => {
+      isCancelled = true;
+      if (reader.readyState === FileReader.LOADING) {
+        reader.abort();
+      }
     };
-
-    const parser = new DOMParser();
-
-    console.log("reader result is", readerResult);
-    return parser.parseFromString(readerResult, "text/xml");
   }, [file]);
 
   console.log("Parsed XML:", parsedText);
@@ -59,12 +91,3 @@ const App = () => {
 };
 
 export default App;
-
-// {
-/* <a href="https://electron-vite.github.io" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a> */
-// }
